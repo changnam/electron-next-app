@@ -10,6 +10,9 @@ jobs:
     runs-on: windows-latest
 
     steps:
+      - name: Clean workspace
+        run: rm -rf node_modules
+
       - name: Checkout
         uses: actions/checkout@v4
 
