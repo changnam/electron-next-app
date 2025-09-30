@@ -12,6 +12,7 @@ jobs:
     steps:
       - name: Clean workspace
         run: rm -rf node_modules
+        shell: bash
 
       - name: Checkout
         uses: actions/checkout@v4
