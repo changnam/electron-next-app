@@ -19,6 +19,14 @@ const eslintConfig = [
       "build/**",
       "next-env.d.ts",
     ],
+    overrides: [
+      {
+        files: ["main/**", "electron/**"], // Electron main process files
+        rules: {
+          "@typescript-eslint/no-require-imports": "off",
+        },
+      },
+    ],
   },
 ];
 
