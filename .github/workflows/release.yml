@@ -32,6 +32,18 @@ jobs:
           npm -v
 
       # 5️⃣ Install dependencies using npm ci (lockfile must be up-to-date)
+      - name: Install dependencies dry run
+        run: npm ci --dry-run
+
+      # 5️⃣ Install dependencies using npm ci (lockfile must be up-to-date)
+      - name: Install dependencies dry run
+        run: npm install --package-lock-only
+
+      # 5️⃣ Install dependencies using npm ci (lockfile must be up-to-date)
+      - name: compare package-lock.json
+        run: git diff package-lock.json
+
+      # 5️⃣ Install dependencies using npm ci (lockfile must be up-to-date)
       - name: Install dependencies
         run: npm ci
 
