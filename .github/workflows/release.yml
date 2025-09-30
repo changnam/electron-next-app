@@ -1,34 +1,46 @@
-name: Build and Release (tags)
+name: Build and Release Electron + Next.js
 
 on:
   push:
     tags:
-      - "v*.*.*" # triggers on tags like v1.0.0
+      - "v*.*.*" # Trigger on semantic version tags like v1.0.0
 
 jobs:
   build-and-publish:
     runs-on: windows-latest
 
     steps:
-      - name: Clean workspace
-        run: rm -rf node_modules
-        shell: bash
-
-      - name: Checkout
+      # 1️⃣ Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Use Node.js with specific npm
+      # 2️⃣ Setup Node.js and npm cache
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22.12.0
+          node-version: 22.12.0 # match local dev Node
           cache: "npm"
-          check-latest: true
-      - run: npm install -g npm@11.2.0 # Pin exact npm version
 
+      # 3️⃣ Pin exact npm version to match lockfile
+      - name: Ensure npm version
+        run: npm install -g npm@11.2.0
+
+      # 4️⃣ Verify Node and npm versions
+      - name: Print Node and npm versions
+        run: |
+          node -v
+          npm -v
+
+      # 5️⃣ Install dependencies using npm ci (lockfile must be up-to-date)
       - name: Install dependencies
         run: npm ci
 
-      - name: Build and publish to GitHub Releases
+      # 6️⃣ Build Next.js App Router
+      - name: Build Next.js
+        run: npm run build-next
+
+      # 7️⃣ Build Electron app and publish to GitHub Releases
+      - name: Build and Publish Electron App
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # built-in token
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # required for GitHub Releases
         run: npm run dist:publish
