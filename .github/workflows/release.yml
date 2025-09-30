@@ -54,5 +54,5 @@ jobs:
       # 7️⃣ Build Electron app and publish to GitHub Releases
       - name: Build and Publish Electron App
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # required for GitHub Releases
+          GH_TOKEN: ${{ secrets.GH_PAT }} # required for GitHub Releases
         run: npm run dist:publish
