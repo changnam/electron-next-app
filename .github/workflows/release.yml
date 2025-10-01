@@ -24,6 +24,7 @@ jobs:
         with:
           node-version: 22.12.0 # match local dev Node
           cache: "npm"
+      - run: npm install -g npm@11.2.0
 
       # 4️⃣ Verify Node and npm versions
       - name: Print Node and npm versions
